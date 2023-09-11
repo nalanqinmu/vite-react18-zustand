@@ -12,6 +12,7 @@ import {
 } from "@ant-design/icons";
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
 const TablePage = lazy(() => import('@/pages/TablePage'))
+const Game = lazy(() => import('@/pages/Game'))
 const routes = [
   {
     path: "/",
@@ -32,6 +33,12 @@ const routes = [
             title: "表格",
             icon: <TableOutlined />,
             element: <TablePage />,
+          },
+          {
+            path: "game",
+            title: "游戏",
+            icon: <TableOutlined />,
+            element: <Game />,
           },
         ]
       },
