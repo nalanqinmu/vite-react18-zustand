@@ -5,7 +5,7 @@ import { Button } from 'antd';
 import { useImmer } from 'use-immer';
 import AddTask from './AddTask.jsx';
 import TaskList from './TaskList.jsx';
-import { set } from 'lodash';
+import { add, set } from 'lodash';
 export default function DemoCom({ count, onClick, children }) {
   const { primaryColor } = useGlobalStore();
 
