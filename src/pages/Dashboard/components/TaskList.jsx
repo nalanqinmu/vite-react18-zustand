@@ -1,8 +1,12 @@
 import { Checkbox, Button } from 'antd';
+import { useState } from 'react';
 function Task({ item }) {
+  const [done, setDone] = useState(item.done)
   return (
     <>
-      <Checkbox checked={item.done} > {item.text}</Checkbox>
+      <Checkbox checked={done} onChange={(e) => {
+        setDone(e.target.checked)
+      }}> {item.text}</Checkbox>
       <Button onClick={() => handleTaskClick()}>编辑</Button>
       <Button>删除</Button>
     </>

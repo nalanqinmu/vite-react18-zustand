@@ -5,11 +5,10 @@ import { Button } from 'antd';
 import { useImmer } from 'use-immer';
 import AddTask from './AddTask.jsx';
 import TaskList from './TaskList.jsx';
+import { set } from 'lodash';
 export default function DemoCom({ count, onClick, children }) {
   const { primaryColor } = useGlobalStore();
-  useEffect(() => {
-    console.log('组件挂行了');
-  }, [])
+
 
   const [obj, setObj] = useImmer({
     name: '小明',
@@ -30,10 +29,11 @@ export default function DemoCom({ count, onClick, children }) {
   // const [tasks, setTasks] = useState(initialTasks);
   const [tasks, dispatch] = useReducer(tasksReducer, initialTasks)
   const handleAddTask = (text) => {
+    console.log(tasks.slice(-1))
     dispatch(
       {
         type: 'add',
-        id: nextId++,
+        id: tasks.slice(-1)[0].id + 1,
         text: text,
         done: true
       }
@@ -70,25 +70,42 @@ export default function DemoCom({ count, onClick, children }) {
         break;
     }
   }
-
+  const maplist = [{ id: 1, name: '小明' }, { id: 2, name: '小米n' }, { id: 3, name: '小籍' }, { id: 4, name: '小明ssss' }]
+  const [listSet, setListSet] = useState(new Set([1, 2]))
+  useEffect(() => {
+    let arr = new Set(listSet)
+    arr.add(4)
+    setListSet(arr)
+    console.log('listSet', listSet)
+  }, [])
   return (
-    <StatisticCard>
-      <div onClick={onClick} style={{ color: primaryColor, cursor: 'pointer' }} >
-        子组件 传值{count}
-        {children}
-      </div >
+    <>
+      <StatisticCard>
+        <div onClick={onClick} style={{ color: primaryColor, cursor: 'pointer' }} >
+          子组件 传值{count}
+          {children}
+        </div >
 
-      使用immer 更新复杂嵌套对象
-      <p>{obj.list.a.names}</p>
-      <p>{obj.list.a.age}</p>
-      <Button type="primary" onClick={() => setObj(draft => {
-        draft.list.a.age = 20
-        draft.list.a.names = '小米n'
-      })}>更新对象</Button>
+        使用immer 更新复杂嵌套对象
+        <p>{obj.list.a.names}</p>
+        <p>{obj.list.a.age}</p>
+        <Button type="primary" onClick={() => setObj(draft => {
+          draft.list.a.age = 20
+          draft.list.a.names = '小米n'
+        })}>更新对象</Button>
 
-      使用reducer 提取状态逻辑
-      <AddTask onAddTask={handleAddTask} />
-      <TaskList tasks={tasks} onTaskClick={handleTaskClick} onTaskDelete={handleTaskDelete} />
-    </StatisticCard>
+        使用reducer 提取状态逻辑
+        <AddTask onAddTask={handleAddTask} />
+        <TaskList tasks={tasks} onTaskClick={handleTaskClick} onTaskDelete={handleTaskDelete} />
+
+      </StatisticCard>
+      <StatisticCard>
+        使用 new set()
+        {
+          maplist.map(item => listSet.has(item.id) ? <li key={item.id}> {item.name}</li> : '')
+        }
+      </StatisticCard>
+    </>
+
   )
 }
