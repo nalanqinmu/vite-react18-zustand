@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect, useReducer, useContext } from 'react';
 import { useGlobalStore } from '@/stores';
 import { StatisticCard } from "@ant-design/pro-components";
 import { Button } from 'antd';
@@ -6,6 +6,9 @@ import { useImmer } from 'use-immer';
 import AddTask from './AddTask.jsx';
 import TaskList from './TaskList.jsx';
 import { add, set } from 'lodash';
+import { GlobalContext } from './Context.js';
+import GroupContext from 'antd/es/checkbox/GroupContext.js';
+import GrandsonCom from '../../../components/GrandsonCom/index.jsx';
 export default function DemoCom({ count, onClick, children }) {
   const { primaryColor } = useGlobalStore();
 
@@ -79,6 +82,7 @@ export default function DemoCom({ count, onClick, children }) {
     console.log('listSet', listSet)
   }, [])
   return (
+
     <>
       <StatisticCard>
         <div onClick={onClick} style={{ color: primaryColor, cursor: 'pointer' }} >
@@ -105,7 +109,16 @@ export default function DemoCom({ count, onClick, children }) {
           maplist.map(item => listSet.has(item.id) ? <li key={item.id}> {item.name}</li> : '')
         }
       </StatisticCard>
+
+      <StatisticCard>
+        使用 context
+        <GlobalContext.Provider value={888}>
+          <GrandsonCom></GrandsonCom>
+        </GlobalContext.Provider>
+      </StatisticCard>
     </>
+
+
 
   )
 }
