@@ -13,6 +13,7 @@ import {
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
 const TablePage = lazy(() => import('@/pages/TablePage'))
 const Game = lazy(() => import('@/pages/Game'))
+const Cursors = lazy(() => import('@/pages/Cursors'))
 const routes = [
   {
     path: "/",
@@ -39,6 +40,12 @@ const routes = [
             title: "游戏",
             icon: <TableOutlined />,
             element: <Game />,
+          },
+          {
+            path: "Cursors",
+            title: "圆点",
+            icon: <TableOutlined />,
+            element: <Cursors />,
           },
         ]
       },
