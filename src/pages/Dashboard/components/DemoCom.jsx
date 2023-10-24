@@ -80,6 +80,7 @@ export default function DemoCom({ count, onClick, children }) {
     arr.add(4)
     setListSet(arr)
     console.log('listSet', listSet)
+    console.log('useEffect    触发')
   }, [])
   return (
 
